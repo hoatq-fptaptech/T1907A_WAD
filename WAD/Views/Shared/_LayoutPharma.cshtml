@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div class="site-wrap">
+        @Html.Partial("~/Views/Shared/_Header.cshtml")
+        @RenderBody()
+        @Html.Partial("~/Views/Shared/_Footer.cshtml")
+    </div>
+    @Scripts.Render("~/bundles/pharma")
+</body>
+</html>
