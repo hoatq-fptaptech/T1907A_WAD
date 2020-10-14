@@ -1,0 +1,11 @@
+﻿@model IEnumerable<WAD.Models.Product>
+@{
+    Layout = "~/Views/Shared/_LayoutPharma.cshtml";
+}
+<ul>
+    @foreach(var item in Model)
+    {
+        <li>@item.ProductName</li>
+    }
+</ul>
+

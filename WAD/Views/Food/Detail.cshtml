@@ -1,0 +1,7 @@
+﻿@model WAD.Models.Product
+@{
+    Layout = "~/Views/Shared/_LayoutPharma.cshtml";
+}
+<h1>@Model.ProductName</h1>
+@Html.ActionLink(Model.CategoryOfProduct.CategoryName,"Category",new { id=Model.CategoryID})
+

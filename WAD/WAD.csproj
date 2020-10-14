@@ -45,10 +45,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -120,13 +128,59 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Context\DataContext.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\BrandsController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\FoodController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Student.cs" />
+    <Compile Include="Migrations\202010120816043_InitialCreate.cs" />
+    <Compile Include="Migrations\202010120816043_InitialCreate.Designer.cs">
+      <DependentUpon>202010120816043_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010120827251_UpdateProduct.cs" />
+    <Compile Include="Migrations\202010120827251_UpdateProduct.Designer.cs">
+      <DependentUpon>202010120827251_UpdateProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010120830121_UpdateProduct2.cs" />
+    <Compile Include="Migrations\202010120830121_UpdateProduct2.Designer.cs">
+      <DependentUpon>202010120830121_UpdateProduct2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010130806153_AddOrder.cs" />
+    <Compile Include="Migrations\202010130806153_AddOrder.Designer.cs">
+      <DependentUpon>202010130806153_AddOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010130813402_UpdateDB.cs" />
+    <Compile Include="Migrations\202010130813402_UpdateDB.Designer.cs">
+      <DependentUpon>202010130813402_UpdateDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010130816248_UpdateDB2.cs" />
+    <Compile Include="Migrations\202010130816248_UpdateDB2.Designer.cs">
+      <DependentUpon>202010130816248_UpdateDB2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010140711159_UpdateOrderProduct.cs" />
+    <Compile Include="Migrations\202010140711159_UpdateOrderProduct.Designer.cs">
+      <DependentUpon>202010140711159_UpdateOrderProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010140719083_UpdateOrderProduct2.cs" />
+    <Compile Include="Migrations\202010140719083_UpdateOrderProduct2.Designer.cs">
+      <DependentUpon>202010140719083_UpdateOrderProduct2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010140733282_UpdateDB21.cs" />
+    <Compile Include="Migrations\202010140733282_UpdateDB21.Designer.cs">
+      <DependentUpon>202010140733282_UpdateDB21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Brand.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderProduct.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +281,55 @@
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Authetication.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Categories\Create.cshtml" />
+    <Content Include="Views\Categories\Delete.cshtml" />
+    <Content Include="Views\Categories\Details.cshtml" />
+    <Content Include="Views\Categories\Edit.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Brands\Create.cshtml" />
+    <Content Include="Views\Brands\Delete.cshtml" />
+    <Content Include="Views\Brands\Details.cshtml" />
+    <Content Include="Views\Brands\Edit.cshtml" />
+    <Content Include="Views\Brands\Index.cshtml" />
+    <Content Include="Views\Products\Create.cshtml" />
+    <Content Include="Views\Products\Delete.cshtml" />
+    <Content Include="Views\Products\Details.cshtml" />
+    <Content Include="Views\Products\Edit.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Food\Detail.cshtml" />
+    <Content Include="Views\Food\Category.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202010120816043_InitialCreate.resx">
+      <DependentUpon>202010120816043_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010120827251_UpdateProduct.resx">
+      <DependentUpon>202010120827251_UpdateProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010120830121_UpdateProduct2.resx">
+      <DependentUpon>202010120830121_UpdateProduct2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010130806153_AddOrder.resx">
+      <DependentUpon>202010130806153_AddOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010130813402_UpdateDB.resx">
+      <DependentUpon>202010130813402_UpdateDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010130816248_UpdateDB2.resx">
+      <DependentUpon>202010130816248_UpdateDB2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010140711159_UpdateOrderProduct.resx">
+      <DependentUpon>202010140711159_UpdateOrderProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010140719083_UpdateOrderProduct2.resx">
+      <DependentUpon>202010140719083_UpdateOrderProduct2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010140733282_UpdateDB21.resx">
+      <DependentUpon>202010140733282_UpdateDB21.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
