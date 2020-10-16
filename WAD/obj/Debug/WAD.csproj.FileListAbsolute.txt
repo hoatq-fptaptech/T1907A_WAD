@@ -91,3 +91,4 @@ C:\Works\Aptech\T1907A\WAD\WAD\obj\Debug\WAD.Migrations.UpdateOrderProduct.resou
 C:\Works\Aptech\T1907A\WAD\WAD\obj\Debug\WAD.Migrations.UpdateOrderProduct2.resources
 C:\Works\Aptech\T1907A\WAD\WAD\obj\Debug\WAD.Migrations.UpdateDB21.resources
 C:\Works\Aptech\T1907A\WAD\WAD\obj\Debug\WAD.csprojAssemblyReference.cache
+C:\Works\Aptech\T1907A\WAD\WAD\obj\Debug\WAD.Migrations.UpdateValidate.resources

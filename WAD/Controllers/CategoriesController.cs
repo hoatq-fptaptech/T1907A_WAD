@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -8,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using WAD.Context;
 using WAD.Models;
+using System.Dynamic;
 
 namespace WAD.Controllers
 {
@@ -18,7 +20,16 @@ namespace WAD.Controllers
         // GET: Categories
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            var categories = db.Categories.ToList();
+            var products = db.Products.ToList();
+            ViewBag.Categories = categories;
+            ViewBag.Products = products;
+            //ViewData["Categories"] = categories;
+            //ViewData["Products"] = products;
+            dynamic data = new ExpandoObject();
+            data.Categories = categories;
+            data.Products = products;
+            return View(data);
         }
 
         // GET: Categories/Details/5
@@ -47,8 +58,17 @@ namespace WAD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CategoryName,CategoryIcon")] Category category)
+        public ActionResult Create([Bind(Include = "Id,CategoryName")] Category category, HttpPostedFileBase CategoryIcon)
         {
+            // day file len thu muc Uploads 
+            // cho url image vào CategoryIcon của category
+            if(CategoryIcon != null)
+            {
+                string fileName = Path.GetFileName(CategoryIcon.FileName);
+                string path = Path.Combine(Server.MapPath("~/Uploads"), fileName);
+                CategoryIcon.SaveAs(path);// dua image len thu muc uploads
+                category.CategoryIcon = "Uploads/" + fileName;
+            }
             if (ModelState.IsValid)
             {
                 db.Categories.Add(category);
@@ -79,8 +99,15 @@ namespace WAD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CategoryName,CategoryIcon")] Category category)
+        public ActionResult Edit([Bind(Include = "Id,CategoryName")] Category category,HttpPostedFileBase CategoryIcon)
         {
+            if(CategoryIcon != null)
+            {
+                string fileName = Path.GetFileName(CategoryIcon.FileName);
+                string path = Path.Combine(Server.MapPath("~/Uploads"), fileName);
+                CategoryIcon.SaveAs(path);
+                category.CategoryIcon = "Uploads/" + fileName;
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(category).State = EntityState.Modified;

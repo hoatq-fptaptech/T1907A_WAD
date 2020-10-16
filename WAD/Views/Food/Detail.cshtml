@@ -4,4 +4,4 @@
 }
 <h1>@Model.ProductName</h1>
 @Html.ActionLink(Model.CategoryOfProduct.CategoryName,"Category",new { id=Model.CategoryID})
-
+@Html.ActionLink("Add to Cart","AddToCart","Food",new {id=Model.Id })

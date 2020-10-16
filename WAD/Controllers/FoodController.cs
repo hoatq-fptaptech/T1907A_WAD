@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,12 +11,14 @@ namespace WAD.Controllers
 {
     public class FoodController : Controller
     {
-        private DataContext db = new DataContext();
+        private readonly DataContext db = new DataContext();
         // GET: Food
         public ActionResult Index()
         {
-            var products = db.Products.OrderBy(p=>p.ProductName);
-            
+            var products = db.Products.Include("CategoryOfProduct").OrderBy(p => p.Price);
+           // products = products.OrderBy(p => p.ProductName);
+
+
             return View(products.ToList());
         }
 
@@ -31,6 +34,20 @@ namespace WAD.Controllers
             return View(products.ToList());
         }
 
+        public ActionResult AddToCart(int? id)
+        {
+            var product = db.Products.Find(id);
+            List<Product> cart = new List<Product>();
+            if(product != null)
+            {
+                cart.Add(product);
+            }
+            if(cart.Count > 0)
+            {
+                Session["Cart"] = cart;
+            }
+            return View();
+        }
         public string About()
         {
             return "about page";
