@@ -37,16 +37,8 @@ namespace WAD.Controllers
         public ActionResult AddToCart(int? id)
         {
             var product = db.Products.Find(id);
-            List<Product> cart = new List<Product>();
-            if(product != null)
-            {
-                cart.Add(product);
-            }
-            if(cart.Count > 0)
-            {
-                Session["Cart"] = cart;
-            }
-            return View();
+           
+            return RedirectToAction("Index");
         }
         public string About()
         {
