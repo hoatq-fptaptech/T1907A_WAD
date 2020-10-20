@@ -53,7 +53,7 @@ namespace WADAuth.Controllers
         private void AddToCartWithUser(CartItem item)
         {
             UserCart userCart = new UserCart { ProductID = item.Product.Id, Quantity = item.Quantity, UserID = User.Identity.GetUserId() };
-            IEnumerable<UserCart> list = idDb.UserCarts.Where(u => u.UserID == User.Identity.GetUserId() && u.UserID == User.Identity.GetUserId()).ToList();
+            IEnumerable<UserCart> list = idDb.UserCarts.Where(u => u.ProductID == userCart.ProductID && u.UserID == User.Identity.GetUserId()).ToList();
             int check = CheckExist(list, userCart);
             if (check >=0)
             {
