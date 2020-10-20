@@ -106,3 +106,8 @@ C:\Works\Aptech\T1907A\WAD\WADAuth\obj\Debug\WADAuth.csproj.CoreCompileInputs.ca
 C:\Works\Aptech\T1907A\WAD\WADAuth\obj\Debug\WADAuth.csproj.CopyComplete
 C:\Works\Aptech\T1907A\WAD\WADAuth\obj\Debug\WADAuth.dll
 C:\Works\Aptech\T1907A\WAD\WADAuth\obj\Debug\WADAuth.pdb
+C:\Works\Aptech\T1907A\WAD\WADAuth\obj\Debug\WADAuth.Migrations.upadteUserTable.resources
+C:\Works\Aptech\T1907A\WAD\WADAuth\obj\Debug\WADAuth.csproj.GenerateResource.cache
+C:\Works\Aptech\T1907A\WAD\WADAuth\obj\Debug\WADAuth.Migrations.abc.resources
+C:\Works\Aptech\T1907A\WAD\WADAuth\obj\Debug\WADAuth.Migrations.abc2.resources
+C:\Works\Aptech\T1907A\WAD\WADAuth\obj\Debug\WADAuth.Migrations.abc3.resources
