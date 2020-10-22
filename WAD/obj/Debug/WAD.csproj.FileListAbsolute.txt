@@ -94,13 +94,6 @@ C:\Works\Aptech\T1907A\WAD\WAD\obj\Debug\WAD.Migrations.UpdateValidate.resources
 C:\Works\Aptech\T1907A\WAD\WAD\bin\Microsoft.AspNet.Identity.Core.dll
 C:\Works\Aptech\T1907A\WAD\WAD\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Works\Aptech\T1907A\WAD\WAD\bin\Microsoft.AspNet.Identity.Owin.dll
-C:\Works\Aptech\T1907A\WAD\WAD\bin\Microsoft.Owin.Security.Cookies.dll
-C:\Works\Aptech\T1907A\WAD\WAD\bin\Microsoft.Owin.Security.dll
-C:\Works\Aptech\T1907A\WAD\WAD\bin\Microsoft.Owin.Security.OAuth.dll
 C:\Works\Aptech\T1907A\WAD\WAD\bin\Microsoft.AspNet.Identity.Core.xml
 C:\Works\Aptech\T1907A\WAD\WAD\bin\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\Works\Aptech\T1907A\WAD\WAD\bin\Microsoft.AspNet.Identity.Owin.xml
-C:\Works\Aptech\T1907A\WAD\WAD\bin\Microsoft.Owin.Security.xml
-C:\Works\Aptech\T1907A\WAD\WAD\bin\Microsoft.Owin.Security.Cookies.xml
-C:\Works\Aptech\T1907A\WAD\WAD\bin\Microsoft.Owin.Security.OAuth.xml
-C:\Works\Aptech\T1907A\WAD\WAD\obj\Debug\WAD.csprojAssemblyReference.cache

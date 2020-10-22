@@ -177,23 +177,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202010200753174_upadteUserTable.cs" />
-    <Compile Include="Migrations\202010200753174_upadteUserTable.Designer.cs">
-      <DependentUpon>202010200753174_upadteUserTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010200754371_abc.cs" />
-    <Compile Include="Migrations\202010200754371_abc.Designer.cs">
-      <DependentUpon>202010200754371_abc.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010200756368_abc2.cs" />
-    <Compile Include="Migrations\202010200756368_abc2.Designer.cs">
-      <DependentUpon>202010200756368_abc2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010200759150_abc3.cs" />
-    <Compile Include="Migrations\202010200759150_abc3.Designer.cs">
-      <DependentUpon>202010200759150_abc3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -297,20 +280,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202010200753174_upadteUserTable.resx">
-      <DependentUpon>202010200753174_upadteUserTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010200754371_abc.resx">
-      <DependentUpon>202010200754371_abc.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010200756368_abc2.resx">
-      <DependentUpon>202010200756368_abc2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010200759150_abc3.resx">
-      <DependentUpon>202010200759150_abc3.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

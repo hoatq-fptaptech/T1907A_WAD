@@ -29,7 +29,5 @@ namespace WADAuth.Models
         {
             return new ApplicationDbContext();
         }
-
-        public DbSet<UserCart> UserCarts { get; set; }
     }
 }
