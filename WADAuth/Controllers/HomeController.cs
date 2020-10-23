@@ -20,7 +20,7 @@ namespace WADAuth.Controllers
             var products = db.Products;
             return View(products.ToList());
         }
-        [Authorize]
+        //[Authorize]
         public ActionResult AddToCart(int? id,int? qty)
         {
             try
@@ -48,7 +48,7 @@ namespace WADAuth.Controllers
                 return HttpNotFound();
             }
            
-            return RedirectToAction("Index");
+            return RedirectToAction("Cart");
         }
 
         private void AddToCartWithUser(CartItem item)
@@ -89,6 +89,139 @@ namespace WADAuth.Controllers
             }
             return null;
         }
+
+        public ActionResult Cart()
+        {
+            return View();
+        }
+
+        public ActionResult RemoveItem(int? id)
+        {
+            Cart cart = (Cart) Session["Cart"];
+            foreach(var item in cart.CartItems)
+            {
+                if (id == item.Product.Id)
+                {
+                    cart.CartItems.Remove(item);
+                    if(User.Identity.IsAuthenticated)
+                        RemoveItemWithUser(item);
+                    break;
+                }
+                    
+            }
+            return RedirectToAction("Cart");
+        }
+
+        public void RemoveItemWithUser(CartItem item)
+        {
+            string currentUserId = GetCurrentUserID();
+       
+            if (string.IsNullOrEmpty(currentUserId)) { return; }
+
+            UserCart userCart = new UserCart { ProductID = item.Product.Id, Quantity = item.Quantity, UserID = User.Identity.GetUserId() };
+            UserCart uc = db.UserCarts.Where(u => u.ProductID == userCart.ProductID && u.UserID == currentUserId).FirstOrDefault();
+            if (uc != null)
+            {
+                db.UserCarts.Remove(uc);
+                db.SaveChanges();
+            }
+        }
+
+        public ActionResult Checkout()
+        {
+            if (Session["Cart"] == null)
+                return RedirectToAction("Cart");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PlaceOrder([Bind(Include ="Name,Email,Telephone,Address")] PlaceOrder placeOrder) 
+        {
+            if (ModelState.IsValid)
+            {
+                Customer customer = new Customer() { CustomerName = placeOrder.Name, Email = placeOrder.Email, Address = placeOrder.Address, PhoneNumber = placeOrder.Telephone };
+                db.Customers.Add(customer);
+                db.SaveChanges();
+                Cart cart = (Cart)Session["Cart"];
+                Order order = new Order()
+                {
+                    IncrementID = "#" + DateTime.Now.ToBinary().ToString() + customer.Id,
+                    GrandTotal = cart.GrandTotal,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                    Customer = customer
+                };
+                db.Orders.Add(order);
+                db.SaveChanges();
+                foreach(var item in cart.CartItems)
+                {
+                    OrderProduct op = new OrderProduct()
+                    {
+                        Qty = item.Quantity,
+                        Price = item.Product.Price,
+                        Order_Id = order.Id,
+                        Product_Id = item.Product.Id
+                    };
+                    db.OrderProducts.Add(op);
+                    
+                }
+                db.SaveChanges();
+
+                UpdateQuantity();
+                // gui email...
+                
+            }
+            return RedirectToAction("CheckoutSuccess");
+        }
+
+        public ActionResult CheckoutSuccess()
+        {
+            return View();
+        }
+
+        public void UpdateQuantity()
+        {
+            Cart cart = (Cart)Session["Cart"];
+            foreach(var item in cart.CartItems)
+            {
+                // thay doi so luong san pham
+                Product p = db.Products.Find(item.Product.Id);
+                p.Qty -= item.Quantity;
+                db.Entry(p).State = EntityState.Modified;
+
+                // xoa gio hang trong db
+                if (User.Identity.IsAuthenticated)
+                {
+                    string userID = GetCurrentUserID();
+                    if (!String.IsNullOrEmpty(userID)) {
+                        UserCart uc = db.UserCarts.Where(u => u.ProductID == item.Product.Id && u.UserID == userID).FirstOrDefault();
+                        if (uc != null)
+                        {
+                            db.UserCarts.Remove(uc);
+                        }
+                    }
+                    
+                }
+            }
+            db.SaveChanges();
+            Session["Cart"] = null;
+        }
+
+        public double AjaxCart(int? id,int? qty) 
+        {
+            Cart cart = (Cart)Session["Cart"];
+            foreach(var item in cart.CartItems)
+            {
+                if (item.Product.Id == id)
+                {
+                    item.Quantity = (int)qty;
+                }
+            }
+            cart.CalculateGrandTotal();
+            return cart.GrandTotal;
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

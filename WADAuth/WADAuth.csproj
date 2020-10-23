@@ -177,6 +177,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010220704400_InitialCreate.cs" />
+    <Compile Include="Migrations\202010220704400_InitialCreate.Designer.cs">
+      <DependentUpon>202010220704400_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010230812297_UpdateCode.cs" />
+    <Compile Include="Migrations\202010230812297_UpdateCode.Designer.cs">
+      <DependentUpon>202010230812297_UpdateCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -187,6 +196,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderProduct.cs" />
+    <Compile Include="Models\PlaceOrder.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\UserCart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -204,6 +214,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -263,6 +274,9 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Home\Cart.cshtml" />
+    <Content Include="Views\Home\Checkout.cshtml" />
+    <Content Include="Views\Home\CheckoutSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -280,6 +294,14 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202010220704400_InitialCreate.resx">
+      <DependentUpon>202010220704400_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010230812297_UpdateCode.resx">
+      <DependentUpon>202010230812297_UpdateCode.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
