@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Security.Claims;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace WADAuth.Controllers
 {
@@ -127,11 +128,56 @@ namespace WADAuth.Controllers
             }
         }
 
+        public void MergeCart()
+        {
+            // ghep gio hang giua Session va DB
+            Cart cart = Session["Cart"] != null ? (Cart)Session["Cart"] : new Cart();
+            DataContext db = new DataContext();
+            string userID = GetCurrentUserID();
+            List<UserCart> userCarts = db.UserCarts.Where(u => u.UserID == userID).ToList();
+            foreach (var item in userCarts)
+            {
+                CartItem cartItem = new CartItem(db.Products.Find(item.ProductID), item.Quantity);
+                cart.AddToCart(cartItem);
+            }
+            if (cart.CartItems.Count > 0)
+            {
+                Session.Remove("Cart");
+                Session["Cart"] = cart;
+                ResetUserCarts(cart.CartItems, db);
+            }
+         
+        }
+
+        private void ResetUserCarts(List<CartItem> cartItems, DataContext db)
+        {
+            string userID = GetCurrentUserID();
+            var userCarts = db.UserCarts.Where(u => u.UserID == userID).ToList();
+            foreach (var item in userCarts)
+            {
+                db.UserCarts.Remove(item);
+            }
+            db.SaveChanges();
+            foreach (var item in cartItems)
+            {
+                UserCart uc = new UserCart() { ProductID = item.Product.Id, UserID = userID, Quantity = item.Quantity };
+                db.UserCarts.Add(uc);
+            }
+            db.SaveChanges();
+        }
+
+        [Authorize]
         public ActionResult Checkout()
         {
             if (Session["Cart"] == null)
                 return RedirectToAction("Cart");
-            return View();
+            MergeCart();
+            string userId = GetCurrentUserID();
+           
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var user = manager.FindById(userId);
+            PlaceOrder po = new PlaceOrder() { Name = user.UserName, Email = user.Email, Telephone = user.PhoneNumber, Address = "" };
+            return View(po);
         }
 
         [HttpPost]
@@ -140,9 +186,25 @@ namespace WADAuth.Controllers
         {
             if (ModelState.IsValid)
             {
-                Customer customer = new Customer() { CustomerName = placeOrder.Name, Email = placeOrder.Email, Address = placeOrder.Address, PhoneNumber = placeOrder.Telephone };
-                db.Customers.Add(customer);
-                db.SaveChanges();
+                string userId = GetCurrentUserID();
+                var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                var user = manager.FindById(userId);
+                Customer customer = db.Customers.Where(c => c.Email == user.Email).FirstOrDefault();
+                if (customer == null)
+                {
+                    customer = new Customer() { CustomerName = placeOrder.Name, Email = placeOrder.Email, Address = placeOrder.Address, PhoneNumber = placeOrder.Telephone };
+                    db.Customers.Add(customer);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    customer.CustomerName = placeOrder.Name;
+                    customer.Address = placeOrder.Address;
+                    customer.PhoneNumber = placeOrder.Telephone;
+                    db.Entry(customer).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+              
                 Cart cart = (Cart)Session["Cart"];
                 Order order = new Order()
                 {
@@ -205,7 +267,7 @@ namespace WADAuth.Controllers
                 }
             }
             db.SaveChanges();
-            Session["Cart"] = null;
+            Session.Remove("Cart");
         }
 
         public double AjaxCart(int? id,int? qty) 

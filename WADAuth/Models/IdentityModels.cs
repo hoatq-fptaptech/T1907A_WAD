@@ -16,6 +16,8 @@ namespace WADAuth.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+       // public virtual string FullName { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

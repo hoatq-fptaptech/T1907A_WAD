@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using WADAuth.Context;
 using WADAuth.Models;
 
 namespace WADAuth.Controllers
@@ -90,6 +92,10 @@ namespace WADAuth.Controllers
                     return View(model);
             }
         }
+
+        
+
+        
 
         //
         // GET: /Account/VerifyCode
